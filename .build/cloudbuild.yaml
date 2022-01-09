@@ -1,0 +1,34 @@
+steps:
+
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'asia-south1-docker.pkg.dev/zero65/docker/gateway:$COMMIT_SHA', '-f', '.build/Dockerfile', '.']
+# Push the image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'asia-south1-docker.pkg.dev/zero65/docker/gateway:$COMMIT_SHA']
+# Deploy image to Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - 'run'
+  - 'deploy'
+  - 'gateway'
+  - '--image'
+  - 'asia-south1-docker.pkg.dev/zero65/docker/gateway:$COMMIT_SHA'
+  - '--region'
+  - 'asia-south1'
+  - '--platform'
+  - 'managed'
+  - '--port'
+  - '8080'
+  - '--memory'
+  - '128Mi'
+  - '--cpu'
+  - '1'
+  - '--timeout'
+  - '5'
+  - '--concurrency'
+  - '25'
+  - '--min-instances'
+  - '0'
+  - '--max-instances'
+  - '3'

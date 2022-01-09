@@ -1,0 +1,7 @@
+{
+  "market": {
+    "devo": "localhost:8081",
+    "test": "market-ci6dfndpjq-el.a.run.app",
+    "prod": "market-ci6dfndpjq-el.a.run.app"
+  }
+}
