@@ -12,7 +12,8 @@
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "unzipper": "^0.10.11"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
@@ -23,3 +24,4 @@
     "delay": "100"
   }
 }
+ 

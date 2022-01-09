@@ -9,11 +9,13 @@ app.use(require('cors')());
 // Easy access cookies
 app.use(require('cookie-parser')());
 
+const appConfig  = require('./.utils/app-config.js').get();
+
 
 
 app.get('*', async (req, res) => {
 
-  let service = undefined, path = req.url, query = '';
+  let service = req.host.substring(0, req.host.indexOf('.')), path = req.url, query = '';
 
   let i = path.indexOf('?');
   if(i != -1) {
@@ -21,26 +23,11 @@ app.get('*', async (req, res) => {
     path = path.substring(0, i);
   }
 
-  if(path == '' || path == '/' || path == '/api' || path == '/api/')
-    return res.sendStatus(404);
-
-  if(path.startsWith('/api/'))
-    path = path.substring(5);
-  else
-    path = path.substring(1);
-
-  if(path.endsWith('/'))
-    path = path.substring(0, path.length -1);
-
-  i = path.indexOf('/');
-  if(i == -1) {
-    service = path;
-    path = '/';
-  } else {
-    service = path.substring(0, i);
-    path = path.substring(i);
-  }
-
+  path = path.substring(4);
+  if(path == '' || path == '/')
+    path = '';
+  else if(path.endsWith('/'))
+    path = path.substring(0, path.length - 1);
 
   let headers = {};
 
@@ -58,14 +45,14 @@ app.get('*', async (req, res) => {
     headers['x-cloud-trace-context'] = traceContext;
   }
 
-  let ret = await httpsUtil.doGetService(service, path, headers, req.query);
+  let ret = await httpUtil.doGetService(service, path, headers, req.query);
   res.status(ret.status).send(ret.data);
 
 });
 
 
 
-app.listen(process.env.PORT, console.log(`index: Server is up and running.`));
+app.listen(appConfig.port, console.log(`index: Server is up and running.`));
 
 if(process.env.NODE_ENV == 'devo')
   require('./resources/cron.js');

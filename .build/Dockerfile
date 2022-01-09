@@ -14,7 +14,6 @@ COPY package*.json ./
 RUN npm install --only=production
 
 # Copy local code to the container image.
-COPY resources/cron.js resources/cron.js
 COPY .utils .utils
 COPY index.js index.js
 
