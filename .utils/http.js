@@ -195,7 +195,8 @@ exports.doGetService = async (name, api, headers = {}, message) => {
   if(!SERVICES[name] || !SERVICES[name][process.env.NODE_ENV])
     return { status: 404 };
 
-  let host = SERVICES[name][process.env.NODE_ENV];
+  let { host, prefix } = SERVICES[name][process.env.NODE_ENV];
+  prefix = prefix || '';
 
   headers['User-Agent'] = process.env.NODE_ENV + '/' + (process.env.K_REVISION || process.env.USER);
   if(process.env.NODE_ENV == 'prod')
@@ -206,6 +207,6 @@ exports.doGetService = async (name, api, headers = {}, message) => {
       { 'audience': 'https://' + host }
     )).data;
 
-  return exports.doGet(host, api, headers, message);
+  return exports.doGet(host, prefix + api, headers, message);
 
 }

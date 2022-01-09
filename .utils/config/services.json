@@ -1,7 +1,7 @@
 {
   "market": {
-    "devo": "localhost:8081",
-    "test": "market.zero65.in/api",
-    "prod": "market-ci6dfndpjq-el.a.run.app"
+    "devo": { "host": "market.zero65.in", "prefix": "/api" },
+    "test": { "host": "market.zero65.in", "prefix": "/api" },
+    "prod": { "host": "market-ci6dfndpjq-el.a.run.app" }
   }
 }

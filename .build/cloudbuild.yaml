@@ -27,11 +27,11 @@ steps:
   - '--timeout'
   - '5'
   - '--concurrency'
-  - '25'
+  - '100'
   - '--min-instances'
   - '0'
   - '--max-instances'
-  - '3'
+  - '1'
 
   - '--service-account'
   - 'cloud-run@zero65.iam.gserviceaccount.com'

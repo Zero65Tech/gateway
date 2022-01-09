@@ -15,7 +15,7 @@ const appConfig  = require('./.utils/app-config.js').get();
 
 app.get('*', async (req, res) => {
 
-  let service = req.host.substring(0, req.host.indexOf('.')), path = req.url, query = '';
+  let service = req.hostname.substring(0, req.hostname.indexOf('.')), path = req.url, query = '';
 
   let i = path.indexOf('?');
   if(i != -1) {
