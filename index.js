@@ -53,6 +53,3 @@ app.get('*', async (req, res) => {
 
 
 app.listen(appConfig.port, console.log(`index: Server is up and running.`));
-
-if(process.env.NODE_ENV == 'devo')
-  require('./resources/cron.js');
