@@ -2,12 +2,8 @@ const express = require('express');
 const httpUtil = require('../.utils/http.js');
 
 const app = express();
-// Parse JSON bodies
-app.use(express.json());
 // Enable All CORS Requests
 app.use(require('cors')());
-// Easy access cookies
-app.use(require('cookie-parser')());
 
 const config  = require('./config.js');
 

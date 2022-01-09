@@ -10,7 +10,10 @@ const userAccess = {
 module.exports = {
 
   market: {
-    '/price': {}
+    '/price': {},
+    '/fut/expiry': {},
+    '/opt/strikes': {},
+    '/zerodha/instruments': {}
   },
 
   zerodha: {
