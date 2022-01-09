@@ -3,5 +3,10 @@
     "devo": { "host": "market.zero65.in", "prefix": "/api" },
     "test": { "host": "market.zero65.in", "prefix": "/api" },
     "prod": { "host": "market-ci6dfndpjq-el.a.run.app" }
+  },
+  "zerodha": {
+    "devo": { "host": "zerodha.zero65.in", "prefix": "/api" },
+    "test": { "host": "zerodha.zero65.in", "prefix": "/api" },
+    "prod": { "host": "zerodha-ci6dfndpjq-el.a.run.app" }
   }
 }

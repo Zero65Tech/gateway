@@ -11,8 +11,7 @@ const config = {
       "port": 8082
     },
     "invest": {
-      "port": 8083,
-      "marketApi": "market-ci6dfndpjq-el.a.run.app"
+      "port": 8083
     },
     "paisa": {
       "port": 8084
@@ -27,8 +26,7 @@ const config = {
       "port": 8081
     },
     "invest": {
-      "port": 8083,
-      "marketApi": "market-ci6dfndpjq-el.a.run.app"
+      "port": 8083
     }
   },
 
@@ -40,8 +38,7 @@ const config = {
       "port": 8080
     },
     "invest": {
-      "port": 8080,
-      "marketApi": "market-ci6dfndpjq-el.a.run.app"
+      "port": 8080
     }
   }
 

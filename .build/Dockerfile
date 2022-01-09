@@ -15,6 +15,7 @@ RUN npm install --only=production
 
 # Copy local code to the container image.
 COPY .utils .utils
+COPY config.js config.js
 COPY index.js index.js
 
 # Run the web service on container startup.

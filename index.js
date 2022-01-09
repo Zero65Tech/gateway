@@ -10,12 +10,19 @@ app.use(require('cors')());
 app.use(require('cookie-parser')());
 
 const appConfig  = require('./.utils/app-config.js').get();
+const config  = require('./config.js');
 
 
 
 app.get('*', async (req, res) => {
 
-  let service = req.hostname.substring(0, req.hostname.indexOf('.')), path = req.url, query = '';
+  let service = req.hostname.substring(0, req.hostname.indexOf('.'));
+
+  if(!config[service])
+    return res.sendStatus(404);
+
+
+  let path = req.url, query = '';
 
   let i = path.indexOf('?');
   if(i != -1) {
@@ -25,9 +32,30 @@ app.get('*', async (req, res) => {
 
   path = path.substring(4);
   if(path == '' || path == '/')
-    path = '';
+    path = '/';
   else if(path.endsWith('/'))
     path = path.substring(0, path.length - 1);
+
+  if(!config[service][path])
+    return res.sendStatus(404);
+
+
+  if(config[service][path].validate && !config[service][path].validate(emailId, req.query))
+    return res.sendStatus(400);
+
+
+  let email = undefined;
+  let token = req.headers.authorization;
+  if(token && token.startsWith('Bearer ')) {
+    token = token.substring('Bearer '.length);
+    let resp = await httpUtil.doGet('www.googleapis.com', '/oauth2/v3/tokeninfo', {}, { access_token:token });
+    if(resp.status == 200)
+      email = resp.data.email;
+  }
+
+  if(config[service][path].auth && !config[service][path].auth(email, req.query))
+    return res.sendStatus(403);
+
 
   let headers = {};
 
