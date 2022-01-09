@@ -1,5 +1,5 @@
 const express = require('express');
-const httpUtil = require('./.utils/http.js');
+const httpUtil = require('../.utils/http.js');
 
 const app = express();
 // Parse JSON bodies
@@ -9,7 +9,6 @@ app.use(require('cors')());
 // Easy access cookies
 app.use(require('cookie-parser')());
 
-const appConfig  = require('./.utils/app-config.js').get();
 const config  = require('./config.js');
 
 
@@ -80,4 +79,4 @@ app.get('*', async (req, res) => {
 
 
 
-app.listen(appConfig.port, console.log(`index: Server is up and running.`));
+app.listen(process.env.PORT, console.log(`index: Server is up and running.`));

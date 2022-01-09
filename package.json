@@ -4,9 +4,9 @@
   "description": "Gateway Service",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=prod node index.js",
-    "test": "NODE_ENV=test nodemon index.js",
-    "dev": "NODE_ENV=devo nodemon index.js"
+    "start": "NODE_ENV=prod PORT=8080 node routes/index.js",
+    "test": "NODE_ENV=test PORT=8080 nodemon routes/index.js",
+    "dev": "NODE_ENV=devo PORT=8080 nodemon routes/index.js"
   },
   "author": "Zero65 Technologies Pvt. Ltd.",
   "dependencies": {
