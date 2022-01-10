@@ -3,6 +3,7 @@ const unzipper = require('unzipper');
 const http = require('http');
 const https = require('https');
 const querystring = require('querystring');
+const {GoogleAuth} = require('google-auth-library');
 
 const httpAgent = new http.Agent({
   keepAlive: true, 
@@ -12,6 +13,10 @@ const httpAgent = new http.Agent({
 const httpsAgent = new https.Agent({
   keepAlive: true, 
   maxSockets: Infinity
+});
+
+const auth = new GoogleAuth({
+  scopes: 'https://www.googleapis.com/auth/userinfo.email'
 });
 
 const SERVICES = require('./config/services.json');
@@ -206,6 +211,8 @@ exports.doGetService = async (name, api, headers = {}, message) => {
       { 'Metadata-Flavor': 'Google' },
       { 'audience': 'https://' + host }
     )).data;
+  else
+   headers['Authorization'] = 'Bearer ' + await auth.getAccessToken();
 
   return exports.doGet(host, prefix + api, headers, message);
 

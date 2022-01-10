@@ -2,7 +2,7 @@
   "name": "gateway",
   "version": "1.0.0",
   "description": "Gateway Service",
-  "main": "index.js",
+  "main": "routes/index.js",
   "scripts": {
     "start": "NODE_ENV=prod PORT=8080 node routes/index.js",
     "test": "NODE_ENV=test PORT=8080 nodemon routes/index.js",
@@ -10,9 +10,9 @@
   },
   "author": "Zero65 Technologies Pvt. Ltd.",
   "dependencies": {
-    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "google-auth-library": "^7.11.0",
     "unzipper": "^0.10.11"
   },
   "devDependencies": {
@@ -24,4 +24,3 @@
     "delay": "100"
   }
 }
- 

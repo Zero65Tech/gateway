@@ -1,9 +1,12 @@
 const express = require('express');
+const {OAuth2Client} = require('google-auth-library');
 const httpUtil = require('../.utils/http.js');
 
 const app = express();
 // Enable All CORS Requests
 app.use(require('cors')());
+
+const oAuth2Client = new OAuth2Client();
 
 const config  = require('./config.js');
 
@@ -17,13 +20,10 @@ app.get('*', async (req, res) => {
     return res.sendStatus(404);
 
 
-  let path = req.url, query = '';
+  let path = req.url;
 
-  let i = path.indexOf('?');
-  if(i != -1) {
-    query = path.substring(i + 1);
-    path = path.substring(0, i);
-  }
+  if(path.indexOf('?') != -1)
+    path = path.substring(0, path.indexOf('?'));
 
   path = path.substring(4);
   if(path == '' || path == '/')
@@ -41,12 +41,8 @@ app.get('*', async (req, res) => {
 
   let email = undefined;
   let token = req.headers.authorization;
-  if(token && token.startsWith('Bearer ')) {
-    token = token.substring('Bearer '.length);
-    let resp = await httpUtil.doGet('www.googleapis.com', '/oauth2/v3/tokeninfo', {}, { access_token:token });
-    if(resp.status == 200)
-      email = resp.data.email;
-  }
+  if(token && token.startsWith('Bearer '))
+    email = (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
 
   if(config[service][path].auth && !config[service][path].auth(email, req.query))
     return res.sendStatus(403);
