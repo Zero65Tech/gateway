@@ -32,6 +32,8 @@ module.exports = {
     '/trades/organized': {},
     '/trades/fo/mom': {},
     '/trades/pnl': {},
+    '/transactions': {},
+    '/transactions/funds': {},
     '/portfolio': {},
     '/portfolio/yoy': {},
     '/portfolio/scripts': {},
