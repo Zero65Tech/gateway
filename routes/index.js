@@ -50,6 +50,8 @@ app.get('*', async (req, res) => {
 
   let headers = {};
 
+  if(req.headers['cookie'])
+    headers['cookie'] = req.headers['cookie'];
   if(req.headers['if-none-match'])
     headers['if-none-match'] = req.headers['if-none-match'];
 
