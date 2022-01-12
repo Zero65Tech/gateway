@@ -22,6 +22,11 @@ module.exports = {
       auth: (email, params) => {
         return email && userAccess[email] && userAccess[email].indexOf(params.userId) != -1;
       }
+    },
+    '/enctoken': {
+      auth: (email, params) => {
+        return email && userAccess[email] && userAccess[email].indexOf(params.userId) != -1;
+      }
     }
   },
 
