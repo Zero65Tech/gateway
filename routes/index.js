@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const {OAuth2Client} = require('google-auth-library');
 const httpUtil = require('../.utils/http.js');
@@ -8,17 +9,11 @@ app.use(require('cors')());
 
 const oAuth2Client = new OAuth2Client();
 
-const config  = require('./config.js');
-
 
 
 app.get('*', async (req, res) => {
 
   let service = req.hostname.substring(0, req.hostname.indexOf('.'));
-
-  if(!config[service])
-    return res.sendStatus(404);
-
 
   let path = req.url;
 
@@ -31,11 +26,21 @@ app.get('*', async (req, res) => {
   else if(path.endsWith('/'))
     path = path.substring(0, path.length - 1);
 
-  if(!config[service][path])
-    return res.sendStatus(404);
 
+  if(!fs.existsSync(`${ __dirname }/services/${ service }.js`))
+    return res.status(404).send('Service not found !');
 
-  if(config[service][path].validate && !config[service][path].validate(emailId, req.query))
+  let config = require(`./services/${ service }.js`);
+
+  config = config[path];
+  if(!config)
+    return res.status(404).send('Api not found !');
+
+  config = config[req.method]
+  if(!config)
+    return res.status(405).send('Method not allowed !');
+
+  if(config.validate && !config.validate(emailId, req.query))
     return res.sendStatus(400);
 
 
@@ -44,7 +49,7 @@ app.get('*', async (req, res) => {
   if(token && token.startsWith('Bearer '))
     email = (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
 
-  if(config[service][path].auth && !config[service][path].auth(email, req.query))
+  if(config.auth && !config.auth(email, req.query))
     return res.sendStatus(403);
 
 

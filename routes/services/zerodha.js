@@ -9,53 +9,18 @@ const userAccess = {
 }
 
 module.exports = {
-
-  market: {
-    '/price': {},
-    '/fut/expiry': {},
-    '/opt/strikes': {},
-    '/zerodha/instruments': {}
-  },
-
-  zerodha: {
-    '/session': {
-      auth: (email, params) => {
-        return email && userAccess[email] && userAccess[email].indexOf(params.userId) != -1;
-      }
-    },
-    '/enctoken': {
+  '/session': {
+    'GET': {
       auth: (email, params) => {
         return email && userAccess[email] && userAccess[email].indexOf(params.userId) != -1;
       }
     }
   },
-
-  invest: {
-    '/users/profiles': {},
-    '/users/groups': {},
-    '/trades': {},
-    '/trades/organized': {},
-    '/trades/fo/mom': {},
-    '/trades/pnl': {},
-    '/transactions': {},
-    '/transactions/funds': {},
-    '/portfolio': {},
-    '/portfolio/yoy': {},
-    '/portfolio/scripts': {},
-    '/portfolio/performance': {},
-    '/portfolio/summary': {},
-    '/portfolio/symbol': {},
-    '/holding-gains/distribution': {},
-    '/fo/positions': {}
-  },
-
-  paisa: {
-    '/fys': {},
-    '/accounts': {},
-    '/sources': {},
-    '/itr': {},
-    '/heads': {},
-    '/heads/filter': {}
+  '/enctoken': {
+    'GET': {
+      auth: (email, params) => {
+        return email && userAccess[email] && userAccess[email].indexOf(params.userId) != -1;
+      }
+    }
   }
-
 }
