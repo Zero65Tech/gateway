@@ -14,11 +14,7 @@ const oAuth2Client = new OAuth2Client();
 app.get('*', async (req, res) => {
 
   let service = req.hostname.substring(0, req.hostname.indexOf('.'));
-
-  let path = req.url;
-
-  if(path.indexOf('?') != -1)
-    path = path.substring(0, path.indexOf('?'));
+  let [ path, query ] = req.url.split('?');
 
   path = path.substring(4);
   if(path == '' || path == '/')
@@ -71,7 +67,7 @@ app.get('*', async (req, res) => {
     headers['x-cloud-trace-context'] = traceContext;
   }
 
-  let ret = await httpUtil.doGetService(service, path, headers, req.query);
+  let ret = await httpUtil.doGetService(service, path, headers, query);
   res.status(ret.status).send(ret.data);
 
 });

@@ -98,14 +98,16 @@ exports.downloadAndUnzip = (host, path, headers = {}, message = {}, downloadPath
 
 }
 
-exports.doGet = (host, path, headers = {}, message = {}) => {
+exports.doGet = (host, path, headers = {}, message) => {
+
+  message = message && typeof message == 'object' ? querystring.stringify(message) : message;
 
   return new Promise((resolve, reject) => {
 
     const options = {
       hostname: host,
       port: 443,
-      path: Object.keys(message).length ? path + '?' + querystring.stringify(message) : path,
+      path: message ? path + '?' + message : path,
       method: 'GET',
       headers: headers,
       agent: httpsAgent
