@@ -47,6 +47,15 @@ module.exports = {
     '/portfolio/symbol': {},
     '/holding-gains/distribution': {},
     '/fo/positions': {}
+  },
+
+  paisa: {
+    '/fys': {},
+    '/accounts': {},
+    '/sources': {},
+    '/itr': {},
+    '/heads': {},
+    '/heads/filter': {}
   }
 
 }
