@@ -1,7 +1,7 @@
 const fs = require('fs');
 const express = require('express');
-const {OAuth2Client} = require('google-auth-library');
-const httpUtil = require('../.utils/http.js');
+const { OAuth2Client } = require('google-auth-library');
+const { Http, Service } = require('@zero65tech/common-utils');
 
 const app = express();
 // Enable All CORS Requests
@@ -67,7 +67,7 @@ app.get('*', async (req, res) => {
     headers['x-cloud-trace-context'] = traceContext;
   }
 
-  let ret = await httpUtil.doGetService(service, path, headers, query);
+  let ret = await Service.doGet(service, path, headers, query, false);
   res.status(ret.status).send(ret.data);
 
 });

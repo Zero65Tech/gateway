@@ -10,10 +10,9 @@
   },
   "author": "Zero65 Technologies Pvt. Ltd.",
   "dependencies": {
+    "@zero65tech/common-utils": "^0.2.2",
     "cors": "^2.8.5",
-    "express": "^4.16.4",
-    "google-auth-library": "^7.11.0",
-    "unzipper": "^0.10.11"
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
