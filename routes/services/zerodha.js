@@ -5,7 +5,7 @@ const userAccess = {
   'shivendraec1088@gmail.com': ['LV0248', 'IQ6382', 'NH6133', 'AJ8534'],
   'gupta.disha30@gmail.com':   ['LV0248', 'IQ6382', 'NH6133', 'AJ8534'],
   'kiteswear.jbp@gmail.com':   ['LV0248', 'IQ6382', 'NH6133', 'AJ8534'],
-  'cli-prashant@zero65.iam.gserviceaccount.com': ['LV0248', 'IQ6382', 'NH6133', 'AJ8534']
+  'cloud-run@zero65.iam.gserviceaccount.com': ['LV0248', 'IQ6382', 'NH6133', 'AJ8534']
 }
 
 module.exports = {
