@@ -1,21 +1,22 @@
 const fs = require('fs');
 const express = require('express');
-const { OAuth2Client } = require('google-auth-library');
-const { Http, Service } = require('@zero65tech/common-utils');
+const { Service } = require('@zero65tech/common-utils');
 
 const app = express();
 // Enable All CORS Requests
 app.use(require('cors')());
+// Parse JSON bodies
+app.use(express.json());
+// Easy access cookies
+app.use(require('cookie-parser')());
 
-const oAuth2Client = new OAuth2Client();
 
 
-
-app.get('*', async (req, res) => {
+app.all('*', async (req, res) => {
 
   let service = req.hostname.substring(0, req.hostname.indexOf('.'));
-  let [ path, query ] = req.url.split('?');
-
+  
+  let [ path ] = req.url.split('?');
   path = path.substring(4);
   if(path == '' || path == '/')
     path = '/';
@@ -40,19 +41,12 @@ app.get('*', async (req, res) => {
     return res.sendStatus(400);
 
 
-  let email = undefined;
-  let token = req.headers.authorization;
-  if(token && token.startsWith('Bearer '))
-    email = (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
-
-  if(config.auth && !config.auth(email, req.query))
+  if(config.auth && ! await config.auth(req))
     return res.sendStatus(403);
 
 
   let headers = {};
 
-  if(req.headers['cookie'])
-    headers['cookie'] = req.headers['cookie'];
   if(req.headers['if-none-match'])
     headers['if-none-match'] = req.headers['if-none-match'];
 
@@ -67,7 +61,8 @@ app.get('*', async (req, res) => {
     headers['x-cloud-trace-context'] = traceContext;
   }
 
-  let ret = await Service.doGet(service, path, headers, query, false);
+
+  let ret = await Service.doGet(service, path, headers, req.query, false);
   res.status(ret.status).send(ret.data);
 
 });
