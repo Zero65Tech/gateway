@@ -17,6 +17,7 @@ const paths = [
   '/trades/pnl',
   '/transactions',
   '/transactions/funds',
+  '/sprints/trades',
   '/portfolio',
   '/portfolio/yoy',
   '/portfolio/scripts',
