@@ -15,6 +15,7 @@ COPY .npmrc .
 RUN npm install --only=production
 
 # Copy local code to the container image.
+COPY static static
 COPY routes routes
 
 # Run the web service on container startup.

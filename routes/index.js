@@ -3,12 +3,19 @@ const express = require('express');
 const { Service } = require('@zero65tech/common-utils');
 
 const app = express();
+
+
+
 // Enable All CORS Requests
 app.use(require('cors')());
+
 // Parse JSON bodies
 app.use(express.json());
+
 // Easy access cookies
 app.use(require('cookie-parser')());
+
+app.use('/api/static', express.static(`${ __dirname }/../static`));
 
 
 
