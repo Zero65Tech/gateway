@@ -25,24 +25,24 @@ async function auth(req) {
   let token = req.headers.authorization;
   if(token && token.startsWith('Bearer ')) {
     let email = (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
-    if(req.query.account) {
-      if(req.query.account != email)
+    if(req.query.email) {
+      if(req.query.email != email)
         return false;
     } else {
-      req.query.account = email;
+      req.query.email = email;
     }
   } else if(req.cookies.account) { // TODO: stop using req.cookies.account cookie
-    if(req.query.account) {
-      if(req.query.account != req.cookies.account)
+    if(req.query.email) {
+      if(req.query.email != req.cookies.account)
         return false;
     } else {
-      req.query.account = req.cookies.account;
+      req.query.email = req.cookies.account;
     }
-  } else if(req.query.account) {
-    if(req.query.account != DEMO_ACCOUNT)
+  } else if(req.query.email) {
+    if(req.query.email != DEMO_ACCOUNT)
       return false;
   } else {
-    req.query.account = DEMO_ACCOUNT;
+    req.query.email = DEMO_ACCOUNT;
   }
 
   return true;
