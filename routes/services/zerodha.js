@@ -30,5 +30,8 @@ module.exports = {
   },
   '/enctoken': {
     'GET': { auth: auth }
+  },
+  '/instruments': {
+    'GET': {}
   }
 }
