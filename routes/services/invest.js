@@ -57,7 +57,7 @@ async function auth(req) {
     req.query.profile = req.query.profile || req.cookies.profile;
 
   if(req.query.profile) {
-    let profiles = (await Service.doGet('invest', '/users/profiles', {}, { account: req.query.account })).data;
+    let profiles = (await Service.doGet('invest', '/users/profiles', {}, { account: req.query.account }));
     if(!profiles[req.query.profile])
       return false;
   }
