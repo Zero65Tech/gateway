@@ -10,7 +10,7 @@
   },
   "author": "Zero65 Technologies Pvt. Ltd.",
   "dependencies": {
-    "@zero65tech/common-utils": "0.10.0",
+    "@zero65tech/common-utils": "0.10.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.16.4"
