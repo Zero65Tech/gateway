@@ -32,7 +32,9 @@ async function auth(req) {
 
   let token = req.headers.authorization;
   if(token && token.startsWith('Bearer ')) {
-    let email = (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
+    let email = token.length > 500
+      ? (await oAuth2Client.verifyIdToken({ idToken:token.substring('Bearer '.length), audience:'220251834863-p6gimkv0cgepodik4c1s8cs471dv9ioq.apps.googleusercontent.com' })).email
+      : (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
     if(req.query.account) {
       if(req.query.account != email)
         return false;
