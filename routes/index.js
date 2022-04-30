@@ -4,11 +4,6 @@ const { Service } = require('@zero65tech/common-utils');
 
 const app = express();
 
-
-
-// Enable All CORS Requests
-// app.use(require('cors')());
-
 // Parse JSON bodies
 app.use(express.json());
 
@@ -44,9 +39,6 @@ app.all('*', async (req, res) => {
   if(!config)
     return res.status(405).send('Method not allowed !');
 
-  if(config.validate && !config.validate(emailId, req.query))
-    return res.sendStatus(400);
-
 
   if(config.auth && ! await config.auth(req))
     return res.sendStatus(403);
@@ -57,19 +49,8 @@ app.all('*', async (req, res) => {
   if(req.headers['if-none-match'])
     headers['if-none-match'] = req.headers['if-none-match'];
 
-  let traceContext = req.headers['x-cloud-trace-context'];
-  if(traceContext) {
-    i = traceContext.indexOf('/');
-    if(i != -1)
-      traceContext = traceContext.substring(0, i);
-    i = traceContext.indexOf(':');
-    if(i != -1)
-      traceContext = traceContext.substring(0, i);
-    headers['x-cloud-trace-context'] = traceContext;
-  }
-
-
   let ret = await Service.doGet(service, path, headers, req.query, false);
+  // TODO: Set 'if-none-match' header
   res.status(ret.status).send(ret.data);
 
 });

@@ -11,13 +11,14 @@ async function auth(req) {
         ? (await oAuth2Client.verifyIdToken({ idToken:token.substring('Bearer '.length), audience:'220251834863-p6gimkv0cgepodik4c1s8cs471dv9ioq.apps.googleusercontent.com' })).payload.email
         : (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
     } catch(e) {
+      console.log(e);
       return false;
     }
   } else {
     req.query.account = 'demo@zero65.in';
   }
 
-  if(req.query.profile) {
+  if(req.query.profile && req.query.profile != 'Demo') {
     let profiles = (await Service.doGet('invest', '/users/profiles', {}, { account: req.query.account }));
     if(!profiles[req.query.profile])
       return false;
