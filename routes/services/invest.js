@@ -30,39 +30,22 @@ const paths = [
 
 async function auth(req) {
 
-  let token = req.headers.authorization;
+  let token = req.headers.authorization || req.cookies.authorization;
   if(token && token.startsWith('Bearer ')) {
-    let email = token.length > 500
+    req.query.account = token.length > 500 // TODO: Fix - Use ID tokens only
       ? (await oAuth2Client.verifyIdToken({ idToken:token.substring('Bearer '.length), audience:'220251834863-p6gimkv0cgepodik4c1s8cs471dv9ioq.apps.googleusercontent.com' })).payload.email
       : (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
-    if(req.query.account) {
-      if(req.query.account != email)
-        return false;
-    } else {
-      req.query.account = email;
-    }
-  } else if(req.cookies.account) { // TODO: stop using req.cookies.account cookie
-    if(req.query.account) {
-      if(req.query.account != req.cookies.account)
-        return false;
-    } else {
-      req.query.account = req.cookies.account;
-    }
-  } else if(req.query.account) {
-    if(req.query.account != DEMO_ACCOUNT)
-      return false;
   } else {
     req.query.account = DEMO_ACCOUNT;
   }
-
-  if(req.cookies.profile)
-    req.query.profile = req.query.profile || req.cookies.profile;
 
   if(req.query.profile) {
     let profiles = (await Service.doGet('invest', '/users/profiles', {}, { account: req.query.account }));
     if(!profiles[req.query.profile])
       return false;
   }
+
+  // TODO: Verify porfolioIds
 
   return true;
 
