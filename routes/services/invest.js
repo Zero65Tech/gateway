@@ -2,21 +2,7 @@ const { OAuth2Client } = require('google-auth-library');
 const { Service } = require('@zero65tech/common-utils');
 const oAuth2Client = new OAuth2Client();
 
-async function auth1(req) {
-
-  let token = req.headers.authorization || req.cookies.authorization;
-  if(token && token.startsWith('Bearer ')) {
-    req.query.account = token.length > 500 // TODO: Fix - Use ID tokens only
-      ? (await oAuth2Client.verifyIdToken({ idToken:token.substring('Bearer '.length), audience:'220251834863-p6gimkv0cgepodik4c1s8cs471dv9ioq.apps.googleusercontent.com' })).payload.email
-      : (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
-    return true;
-  } else {
-    return false;
-  }
-
-}
-
-async function auth2(req) {
+async function auth(req) {
 
   let token = req.headers.authorization || req.cookies.authorization;
   if(token && token.startsWith('Bearer ')) {
@@ -40,21 +26,21 @@ async function auth2(req) {
 }
 
 module.exports = {
-  '/users/profiles':             { 'GET': { auth: auth1 } },
-  '/users/groups':               { 'GET': { auth: auth2 } },
-  '/trades':                     { 'GET': { auth: auth2 } },
-  '/trades/organized':           { 'GET': { auth: auth2 } },
-  '/trades/fo/mom':              { 'GET': { auth: auth2 } },
-  '/trades/pnl':                 { 'GET': { auth: auth2 } },
-  '/transactions':               { 'GET': { auth: auth2 } },
-  '/transactions/funds':         { 'GET': { auth: auth2 } },
-  '/sprints/trades':             { 'GET': { auth: auth2 } },
-  '/portfolio':                  { 'GET': { auth: auth2 } },
-  '/portfolio/yoy':              { 'GET': { auth: auth2 } },
-  '/portfolio/scripts':          { 'GET': { auth: auth2 } },
-  '/portfolio/performance':      { 'GET': { auth: auth2 } },
-  '/portfolio/summary':          { 'GET': { auth: auth2 } },
-  '/portfolio/symbol':           { 'GET': { auth: auth2 } },
-  '/holding-gains/distribution': { 'GET': { auth: auth2 } },
-  '/fo/positions':               { 'GET': { auth: auth2 } }
+  '/users/profiles':             { 'GET': { auth: auth } },
+  '/users/groups':               { 'GET': { auth: auth } },
+  '/trades':                     { 'GET': { auth: auth } },
+  '/trades/organized':           { 'GET': { auth: auth } },
+  '/trades/fo/mom':              { 'GET': { auth: auth } },
+  '/trades/pnl':                 { 'GET': { auth: auth } },
+  '/transactions':               { 'GET': { auth: auth } },
+  '/transactions/funds':         { 'GET': { auth: auth } },
+  '/sprints/trades':             { 'GET': { auth: auth } },
+  '/portfolio':                  { 'GET': { auth: auth } },
+  '/portfolio/yoy':              { 'GET': { auth: auth } },
+  '/portfolio/scripts':          { 'GET': { auth: auth } },
+  '/portfolio/performance':      { 'GET': { auth: auth } },
+  '/portfolio/summary':          { 'GET': { auth: auth } },
+  '/portfolio/symbol':           { 'GET': { auth: auth } },
+  '/holding-gains/distribution': { 'GET': { auth: auth } },
+  '/fo/positions':               { 'GET': { auth: auth } }
 };
