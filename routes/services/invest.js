@@ -39,6 +39,7 @@ module.exports = {
   '/trades/pnl':                 { 'GET': { auth: auth } },
   '/transactions':               { 'GET': { auth: auth } },
   '/transactions/funds':         { 'GET': { auth: auth } },
+  '/statement/day-summary':      { 'GET': { auth: auth } },
   '/sprints/trades':             { 'GET': { auth: auth } },
   '/portfolio':                  { 'GET': { auth: auth } },
   '/portfolio/yoy':              { 'GET': { auth: auth } },
