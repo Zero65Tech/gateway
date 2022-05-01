@@ -4,6 +4,9 @@ const { Service } = require('@zero65tech/common-utils');
 
 const app = express();
 
+// Enable All CORS Requests
+app.use(require('cors')());
+
 // Parse JSON bodies
 app.use(express.json());
 
