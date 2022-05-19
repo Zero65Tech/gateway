@@ -21,7 +21,7 @@ app.use(express.json());
 // Easy access cookies
 app.use(require('cookie-parser')());
 
-app.use('/api/static', express.static(`${ __dirname }/../static`));
+app.use('/static', express.static(`${ __dirname }/../static`));
 
 
 
@@ -40,7 +40,7 @@ app.all('*', async (req, res) => {
       return res.status(404).send('Page not found !');
 
     let host = `${ service }-app-ci6dfndpjq-el.a.run.app`;
-    if(!path.startsWith('/css/') && !path.startsWith('/js/'))
+    if(!path.startsWith('/images/') && !path.startsWith('/css/') && !path.startsWith('/js/'))
       path = '/';
 
     let headers = {};
