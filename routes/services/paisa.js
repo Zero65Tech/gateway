@@ -1,59 +1,35 @@
 const { OAuth2Client } = require('google-auth-library');
-
 const { Service } = require('@zero65tech/common-utils');
-
 const oAuth2Client = new OAuth2Client();
-
-
-
-const DEMO_ACCOUNT = 'demo@zero65.in';
-
-const paths = [
-  '/fys',
-  '/accounts',
-  '/accounts/summary',
-  '/sources',
-  '/itr',
-  '/heads',
-  '/heads/yoy',
-  '/heads/filter',
-  '/transactions',
-];
 
 async function auth(req) {
 
-  let token = req.headers.authorization;
+  let token = req.headers.authorization || req.cookies.authorization;
   if(token && token.startsWith('Bearer ')) {
-    let email = (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
-    if(req.query.email) {
-      if(req.query.email != email)
-        return false;
-    } else {
-      req.query.email = email;
-    }
-  } else if(req.cookies.account) { // TODO: stop using req.cookies.account cookie
-    if(req.query.email) {
-      if(req.query.email != req.cookies.account)
-        return false;
-    } else {
-      req.query.email = req.cookies.account;
-    }
-  } else if(req.query.email) {
-    if(req.query.email != DEMO_ACCOUNT)
+    try {
+      req.query.email = token.length > 500 // TODO: Fix - Use ID tokens only
+        ? (await oAuth2Client.verifyIdToken({ idToken:token.substring('Bearer '.length), audience:'220251834863-p6gimkv0cgepodik4c1s8cs471dv9ioq.apps.googleusercontent.com' })).payload.email
+        : (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
+    } catch(e) {
+      console.log(e);
       return false;
+    }
   } else {
-    req.query.email = DEMO_ACCOUNT;
+    req.query.email = 'demo@zero65.in';
   }
 
   return true;
 
 }
 
-module.exports = paths.reduce((obj, path) => {
-  obj[path] = {
-    'GET': {
-      auth: auth
-    }
-  };
-  return obj;
-}, {});
+module.exports = {
+  '/fys'              : { 'GET': { auth: auth } },
+  '/accounts'         : { 'GET': { auth: auth } },
+  '/accounts/summary' : { 'GET': { auth: auth } },
+  '/sources'          : { 'GET': { auth: auth } },
+  '/itr'              : { 'GET': { auth: auth } },
+  '/heads'            : { 'GET': { auth: auth } },
+  '/heads/yoy'        : { 'GET': { auth: auth } },
+  '/heads/filter'     : { 'GET': { auth: auth } },
+  '/transactions'     : { 'GET': { auth: auth } },
+};
