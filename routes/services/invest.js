@@ -7,9 +7,10 @@ async function auth(req) {
   let token = req.headers.authorization || req.cookies.authorization;
   if(token && token.startsWith('Bearer ')) {
     try {
-      req.query.account = token.length > 500 // TODO: Fix - Use ID tokens only
-        ? (await oAuth2Client.verifyIdToken({ idToken:token.substring('Bearer '.length), audience:'220251834863-p6gimkv0cgepodik4c1s8cs471dv9ioq.apps.googleusercontent.com' })).payload.email
-        : (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email;
+      req.query.account = (await oAuth2Client.verifyIdToken({
+        idToken  : token.substring('Bearer '.length),
+        audience : '220251834863-p6gimkv0cgepodik4c1s8cs471dv9ioq.apps.googleusercontent.com',
+      })).payload.email
     } catch(e) {
       console.log(e);
       return false;
