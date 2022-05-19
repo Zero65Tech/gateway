@@ -1,8 +1,16 @@
 const fs = require('fs');
 const express = require('express');
-const { Service } = require('@zero65tech/common-utils');
+const https = require('https');
+const { Http, Service } = require('@zero65tech/common-utils');
 
 const app = express();
+
+const httpsAgent = new https.Agent({
+  keepAlive: true, 
+  maxSockets: Infinity
+});
+
+
 
 // Enable All CORS Requests
 app.use(require('cors')());
@@ -19,9 +27,45 @@ app.use('/api/static', express.static(`${ __dirname }/../static`));
 
 app.all('*', async (req, res) => {
 
-  let service = req.hostname.substring(0, req.hostname.indexOf('.'));
-  
-  let [ path ] = req.url.split('?');
+  let service = req.hostname.substring(0, req.hostname.indexOf('.'));  
+  let path = req.path;
+
+ 
+  if(!path.startsWith('/api/')) {
+
+    if(req.method != 'GET')
+      return res.status(405).send('Method not allowed !');
+
+    if(service != 'invest' && service != 'paisa')
+      return res.status(404).send('Page not found !');
+
+    let host = `${ service }-app-ci6dfndpjq-el.a.run.app`;
+    if(!path.startsWith('/css/') && !path.startsWith('/js/'))
+      path = '/';
+
+    let headers = {};
+    headers['Authorization'] = 'Bearer ' + (await Http.doGet(
+      'metadata.google.internal:80',
+      '/computeMetadata/v1/instance/service-accounts/default/identity',
+      { 'Metadata-Flavor': 'Google' },
+      { 'audience': 'https://' + host }
+    )).data;
+
+    https.request({
+      hostname: host,
+      port: 443,
+      path: path,
+      method: 'GET',
+      headers: headers,
+      agent: httpsAgent,
+      timeout: 1000
+    }, response => response.pipe(res.status(response.statusCode).set(response.headers)) ).end();
+
+    return;
+
+  }
+
+
   path = path.substring(4);
   if(path == '' || path == '/')
     path = '/';
