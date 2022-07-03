@@ -32,5 +32,8 @@ module.exports = {
   },
   '/instruments': {
     'GET': {}
+  },
+  '/transactions': {
+    'GET': { auth: auth }
   }
 }
