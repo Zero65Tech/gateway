@@ -38,5 +38,8 @@ module.exports = {
   },
   '/portfolio': {
     'GET': { auth: auth }
-  }
+  },
+  '/tax-pnl': {
+    'GET': { auth: auth }
+  },
 }
