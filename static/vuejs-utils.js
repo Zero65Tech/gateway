@@ -16,13 +16,17 @@ window.utils.formatDate = (date) => {
 }
 
 window.utils.formatNumber = (number, d = 0) => {
-  if(Math.abs(number) < 0.0001)
+
+  if(!number || Math.abs(number) < 0.0001)
     return '-';
+
   number = Math.round(number * Math.pow(10, d));
+
   let numberStr = Math.abs(number) + '';
   let l = numberStr.length;
   for(; l < d; l++)
     numberStr = '0' + numberStr;
+
   if(l == d)
     numberStr = '0.' + numberStr;
   else if(l <= 3 + d)
@@ -31,7 +35,9 @@ window.utils.formatNumber = (number, d = 0) => {
     numberStr = numberStr.substring(0, l - 3 - d) + ',' + numberStr.substring(l - 3 - d, l - d) + (d ? '.' + numberStr.substring(l - d) : '')
   else
     numberStr = numberStr.substring(0, l - 5 - d) + ',' + numberStr.substring(l - 5 - d, l - 3 - d) + ',' + numberStr.substring(l - 3 - d, l - d) + (d ? '.' + numberStr.substring(l - d) : '');
+  
   return (number < 0 ? '-' : '') + numberStr;
+
 }
 
 window.utils.formatPercentage = (amount, d = 0) => {
@@ -40,8 +46,6 @@ window.utils.formatPercentage = (amount, d = 0) => {
 }
 
 window.utils.formatCurrency = (amount, d = 0) => {
-  if(!amount || Math.abs(amount) < 0.0001)
-    return '-';
   let f = window.utils.formatNumber(Math.abs(amount), d);
   if(f == '-')
     return '₹0';
