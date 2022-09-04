@@ -1,6 +1,6 @@
-const currFy = 'fy22';
-
-window.utils = {};
+window.utils = {
+  currFy: 'fy23'
+};
 
 
 
