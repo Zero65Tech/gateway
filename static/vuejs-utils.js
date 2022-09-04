@@ -48,7 +48,7 @@ window.utils.formatPercentage = (amount, d = 0) => {
 window.utils.formatCurrency = (amount, d = 0) => {
   let f = window.utils.formatNumber(Math.abs(amount), d);
   if(f == '-')
-    return '₹0';
+    return '-';
   return amount < 0 ? ('- ₹' + f) : ('₹' + f);
 }
 
@@ -142,18 +142,4 @@ window.utils.cssRedGreenGradient = (amount, min, max, mid = 0) => {
     return 'light-green darken-3';
   // if(amount <= max )
     return 'light-green darken-4 grey--text text--lighten-4';
-}
-
-
-
-window.utils.arrayToVuetifyTableRows = (dataArr, headers, formatData = true) => {
-  let rows = [];
-  for(let i = 0; i < dataArr.length; i++) {
-    let row = {};
-    headers.forEach((header, j) => {
-      row[header.value] = formatData ? window.utils.format(dataArr[i][j], header.type) : dataArr[i][j];
-    });
-    rows.push(row);
-  }
-  return rows;
 }
