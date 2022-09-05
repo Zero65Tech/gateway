@@ -49,7 +49,9 @@ module.exports = {
   '/portfolio/performance'      : { 'GET': { auth: auth } },
   '/portfolio/summary'          : { 'GET': { auth: auth } },
   '/portfolio/symbol'           : { 'GET': { auth: auth } },
+  '/portfolio-v4/amount'        : { 'GET': { auth: auth } },
   '/portfolio-v4/pnl'           : { 'GET': { auth: auth } },
+  '/portfolio-v4/pnl-tax'       : { 'GET': { auth: auth } },
   '/holding-gains/distribution' : { 'GET': { auth: auth } },
   '/fo/positions'               : { 'GET': { auth: auth } },
 };
