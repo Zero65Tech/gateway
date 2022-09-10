@@ -35,7 +35,6 @@ module.exports = {
   '/users/profiles'             : { 'GET': { auth: auth } },
   '/users/groups'               : { 'GET': { auth: auth } },
   '/trades'                     : { 'GET': { auth: auth } },
-  '/trades/organized'           : { 'GET': { auth: auth } },
   '/trades/fo/mom'              : { 'GET': { auth: auth } },
   '/trades/pnl'                 : { 'GET': { auth: auth } },
   '/transactions'               : { 'GET': { auth: auth } },
@@ -51,6 +50,8 @@ module.exports = {
   '/portfolio/symbol'           : { 'GET': { auth: auth } },
 
   '/user/sets'                  : { 'GET': { auth: auth } },
+  '/trades/about'               : { 'GET': { auth: auth } },
+  '/trades/organized'           : { 'GET': { auth: auth } },
   '/portfolio-v4/amount'        : { 'GET': { auth: auth } },
   '/portfolio-v4/amount/set'    : { 'GET': { auth: auth } },
   '/portfolio-v4/pnl'           : { 'GET': { auth: auth } },
