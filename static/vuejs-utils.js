@@ -102,6 +102,8 @@ window.utils.cssYellowGradient = (amount, min, max) => {
 }
 
 window.utils.cssRedGreenGradient = (amount, min, max, mid = 0) => {
+  if(amount == null)
+    return '';
   if(amount < mid - (mid - min) / 10 * 9)
     return 'deep-orange darken-4 grey--text text--lighten-4';
   if(amount < mid - (mid - min) / 10 * 8)
@@ -120,7 +122,7 @@ window.utils.cssRedGreenGradient = (amount, min, max, mid = 0) => {
     return 'deep-orange lighten-3';
   if(amount < mid - (mid - min) / 10 * 1)
     return 'deep-orange lighten-4';
-  if(amount < mid - 0.00001)
+  if(amount <= mid - 0.00001)
     return 'deep-orange lighten-5';
   if(amount < mid + 0.00001)
     return '';
