@@ -75,8 +75,10 @@ window.utils.format = (val, type) => {
 
 
 window.utils.cssYellowGradient = (amount, min, max) => {
-  // if(amount < min + 0.00001)
-    // return '';
+  if(amount == null || min == max)
+    return '';
+  // if(amount < min)
+    // return yellow lighten-5';
   if(amount <= min + (max - min) / 10 * 1)
     return 'yellow lighten-5';
   if(amount <= min + (max - min) / 10 * 2)
