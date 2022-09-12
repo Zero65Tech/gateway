@@ -53,6 +53,7 @@ module.exports = {
   '/trades/scripts'             : { 'GET': { auth: auth } },
   '/trades/about'               : { 'GET': { auth: auth } },
   '/trades/organized'           : { 'GET': { auth: auth } },
+  '/sprints/trades-v2'          : { 'GET': { auth: auth } },
   '/portfolio-v4/amount'        : { 'GET': { auth: auth } },
   '/portfolio-v4/amount/set'    : { 'GET': { auth: auth } },
   '/portfolio-v4/pnl'           : { 'GET': { auth: auth } },
