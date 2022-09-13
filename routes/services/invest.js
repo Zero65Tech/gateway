@@ -32,6 +32,7 @@ async function auth(req) {
 }
 
 module.exports = {
+
   '/users/profiles'             : { 'GET': { auth: auth } },
   '/users/groups'               : { 'GET': { auth: auth } },
   '/trades'                     : { 'GET': { auth: auth } },
@@ -53,6 +54,7 @@ module.exports = {
   '/trades/scripts'             : { 'GET': { auth: auth } },
   '/trades/about'               : { 'GET': { auth: auth } },
   '/trades/organized'           : { 'GET': { auth: auth } },
+  '/sprints/summary'            : { 'GET': { auth: auth } },
   '/sprints/trades-v2'          : { 'GET': { auth: auth } },
   '/portfolio-v4/amount'        : { 'GET': { auth: auth } },
   '/portfolio-v4/amount/set'    : { 'GET': { auth: auth } },
@@ -61,4 +63,5 @@ module.exports = {
 
   '/holding-gains/distribution' : { 'GET': { auth: auth } },
   '/fo/positions'               : { 'GET': { auth: auth } },
+  
 };
