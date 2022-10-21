@@ -3,8 +3,9 @@ const oAuth2Client = new OAuth2Client();
 
 const userAccess = {
 
-  'antshpra@gmail.com':        [ 'LV0248', 'IQ6382', 'NH6133', 'AJ8534', 'PC3199' ],
-  'gupta.disha30@gmail.com':   [ 'LV0248', 'IQ6382', 'NH6133', 'AJ8534', 'PC3199' ],
+  'antshpra@gmail.com':           [ 'LV0248', 'IQ6382', 'NH6133', 'AJ8534', 'PC3199' ],
+  'prashantgupta.bits@gmail.com': [ 'LV0248', 'IQ6382', 'NH6133', 'AJ8534', 'PC3199' ],
+  'gupta.disha30@gmail.com':      [ 'LV0248', 'IQ6382', 'NH6133', 'AJ8534', 'PC3199' ],
 
   'gshiv009@gmail.com':        [ 'LV0248', 'IQ6382', 'NH6133', 'AJ8534', 'PC3199' ],
   'nextshivendra@gmail.com':   [ 'LV0248', 'IQ6382', 'NH6133', 'AJ8534', 'PC3199' ],
