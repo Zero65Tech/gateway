@@ -4,19 +4,19 @@ const oAuth2Client = new OAuth2Client();
 
 async function auth(req) {
 
-  let token = req.headers.authorization || req.cookies.authorization;
-  if(token && token.startsWith('Bearer ')) {
-    try {
+  try {
+    if(req.headers.authorization) // Chrome Extension
+      req.query.account = (await oAuth2Client.getTokenInfo(req.headers.authorization.substring('Bearer '.length))).email;
+    else if(req.cookies.authorization) // Web Apps
       req.query.account = (await oAuth2Client.verifyIdToken({
-        idToken  : token.substring('Bearer '.length),
+        idToken  : req.cookies.authorization.substring('Bearer '.length),
         audience : '220251834863-p6gimkv0cgepodik4c1s8cs471dv9ioq.apps.googleusercontent.com',
       })).payload.email
-    } catch(e) {
-      console.log(e);
-      return false;
-    }
-  } else {
-    req.query.account = 'demo@zero65.in';
+    else
+      req.query.account = 'demo@zero65.in';
+  } catch(e) {
+    console.log(e);
+    return false;
   }
 
   if(req.query.profile && req.query.profile != 'Demo') {
