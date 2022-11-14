@@ -5,8 +5,7 @@
   "main": "routes/index.js",
   "scripts": {
     "start": "NODE_ENV=prod node routes/index.js",
-    "test": "NODE_ENV=test nodemon routes/index.js",
-    "devo": "NODE_ENV=devo nodemon routes/index.js"
+    "test": "NODE_ENV=test nodemon routes/index.js"
   },
   "author": "Zero65 Technologies Pvt. Ltd.",
   "dependencies": {
