@@ -1,7 +1,7 @@
 const fs = require('fs');
 const express = require('express');
 const https = require('https');
-const { Http, Service } = require('@zero65tech/common-utils');
+const { Http, Service } = require('@Zero65Tech/utils');
 
 const app = express();
 
