@@ -1,11 +1,10 @@
-FROM node:19-slim
+FROM node:18-slim
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
 COPY .npmrc .
-
-RUN npm install --only=production
+COPY package*.json ./
+RUN npm install --omit=dev
 
 COPY static static
 COPY routes routes

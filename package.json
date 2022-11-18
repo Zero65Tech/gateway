@@ -9,13 +9,10 @@
   },
   "author": "Zero65 Technologies Pvt. Ltd.",
   "dependencies": {
-    "@zero65tech/common-utils": "1.0.14",
-    "cookie-parser": "^1.4.5",
+    "@Zero65Tech/utils": "prod",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "express": "^4.16.4"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4"
+    "express": "^4.18.2"
   },
   "nodemonConfig": {
     "verbose": false,
