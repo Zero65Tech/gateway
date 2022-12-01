@@ -1,5 +1,5 @@
 const { OAuth2Client } = require('google-auth-library');
-const { Service } = require('@Zero65Tech/utils');
+const { Service } = require('@zero65/utils');
 const oAuth2Client = new OAuth2Client();
 
 async function auth(req) {
