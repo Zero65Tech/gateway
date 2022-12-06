@@ -41,7 +41,7 @@ app.all('*', async (req, res) => {
     if(service != 'invest' && service != 'paisa')
       return res.status(404).send('Page not found !');
 
-    let host = `${ service }-app-ci6dfndpjq-${ service == 'invest' ? 'as' : 'el' }.a.run.app`;
+    let host = `${ service }-app-ci6dfndpjq-as.a.run.app`;
     if(!path.startsWith('/images/') && !path.startsWith('/css/') && !path.startsWith('/js/'))
       path = '/';
 
