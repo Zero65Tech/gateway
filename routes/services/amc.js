@@ -6,7 +6,7 @@ const oAuth2Client = new OAuth2Client();
 async function auth(req) {
   let token = req.headers.authorization;
   if(token && token.startsWith('Bearer '))
-    return (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email == 'run-invest@zero65.iam.gserviceaccount.com';
+    return (await oAuth2Client.getTokenInfo(token.substring('Bearer '.length))).email == 'antshpra@gmail.com';
   return false;
 }
 
