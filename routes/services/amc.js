@@ -13,10 +13,10 @@ async function auth(req) {
 }
 
 module.exports = {
-  '/trades': {
+  '/transactions': {
     'GET': { auth: auth }
   },
-  '/transactions': {
+  '/trades': {
     'GET': { auth: auth }
   },
   '/portfolio': {

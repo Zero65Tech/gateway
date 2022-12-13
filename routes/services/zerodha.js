@@ -37,6 +37,9 @@ module.exports = {
   '/transactions': {
     'GET': { auth: auth }
   },
+  '/trades': {
+    'GET': { auth: auth }
+  },
   '/portfolio': {
     'GET': { auth: auth }
   },
