@@ -13,6 +13,9 @@ async function auth(req) {
 }
 
 module.exports = {
+  '/trades': {
+    'GET': { auth: auth }
+  },
   '/transactions': {
     'GET': { auth: auth }
   },
