@@ -58,6 +58,7 @@ module.exports = {
   '/sprints/summary'            : { 'GET': { auth: auth } },
   '/sprints/trades-v2'          : { 'GET': { auth: auth } },
   '/portfolio-v4'               : { 'GET': { auth: auth } },
+  '/portfolio-v4/dates'         : { 'GET': { auth: auth } },
   '/portfolio-v4/amount'        : { 'GET': { auth: auth } },
   '/portfolio-v4/amount/set'    : { 'GET': { auth: auth } },
   '/portfolio-v4/pnl'           : { 'GET': { auth: auth } },
