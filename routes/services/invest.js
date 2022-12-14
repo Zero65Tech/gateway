@@ -63,6 +63,7 @@ module.exports = {
   '/portfolio-v4/amount/set'    : { 'GET': { auth: auth } },
   '/portfolio-v4/pnl'           : { 'GET': { auth: auth } },
   '/portfolio-v4/pnl-tax'       : { 'GET': { auth: auth } },
+  '/portfolio-v4/fo'            : { 'GET': { auth: auth } },
 
   '/holding-gains/distribution' : { 'GET': { auth: auth } },
   '/fo/positions'               : { 'GET': { auth: auth } },
