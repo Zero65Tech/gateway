@@ -1,4 +1,4 @@
 module.exports = {
-  '/session'      : { 'POST': {} },
+  '/session'      : { 'GET': {}, 'POST': {} },
   '/google-login' : { 'POST': {} }
 }
