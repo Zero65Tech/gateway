@@ -28,8 +28,6 @@ app.use('/static', express.static(`${ __dirname }/../static`));
 app.all('*', async (req, res) => {
 
   let service = req.hostname.substring(0, req.hostname.indexOf('.'));  
-  if(service.endsWith('-sgp'))
-    service = service.substring(0, service.length - '-sgp'.length);
   let path = req.path;
 
  
@@ -69,6 +67,15 @@ app.all('*', async (req, res) => {
 
 
   path = path.substring(4);
+
+  if(path.startsWith('/~/')) {
+    path = path.substring(3);
+    let idx = path.indexOf('/');
+    service = path.substring(0, idx);
+    path = path.substring(idx);
+  }
+
+
   if(path == '' || path == '/')
     path = '/';
   else if(path.endsWith('/'))
