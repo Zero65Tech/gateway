@@ -1,8 +1,14 @@
 const express = require('express');
-const app     = express();
+const https   = require('https');
 
-const Config      = require('../src/config');
-const { Service } = require('@zero65/utils');
+const Config   = require('../src/config');
+const { Http } = require('@zero65/utils');
+
+const app        = express();
+const httpsAgent = new https.Agent({
+  keepAlive: true, 
+  maxSockets: Infinity
+});
 
 
 
@@ -58,20 +64,49 @@ app.all('*', async (req, res) => {
   }
 
 
+  // TODO: fix
+  let host = service + '-ci6dfndpjq-as.a.run.app';
+
+  // Headers
+
   let headers = {};
+
+  headers['Authorization'] = 'Bearer ' + (await Http.doGet(
+    'metadata.google.internal:80',
+    '/computeMetadata/v1/instance/service-accounts/default/identity',
+    { 'Metadata-Flavor': 'Google' },
+    { 'audience': 'https://' + host }
+  )).data;
+
+  headers['User-Agent'] = process.env.ENV + '/' + (process.env.K_REVISION || process.env.USER);
+
+  if(req.method == 'POST')
+    headers['content-type'] = 'application/json';
 
   if(req.headers['if-none-match'])
     headers['if-none-match'] = req.headers['if-none-match'];
 
-  let ret;
-  if(req.method == 'GET')
-    ret = await Service.doGet(service, path, headers, req.query, false);
-  else if(req.method == 'POST')
-    ret = await Service.doPost(service, path, headers, req.body, false);
 
-  // TODO: Set 'if-none-match' header
-  
-  res.status(ret.status).send(ret.data);
+  // Request
+
+  let request = https.request({
+    hostname: host,
+    port: 443,
+    path: path + req.originalUrl.substring(req.path.length),
+    method: req.method,
+    headers: headers,
+    agent: httpsAgent,
+    timeout: 1000
+  }, response => response.pipe(res.status(response.statusCode).set(response.headers)) );
+
+  if(req.method == 'POST')
+    request.write(JSON.stringify(req.body));
+
+  request.on('error', (e) => {
+    res.status(500).send(e.message);
+  });
+
+  request.end();
 
 });
 
