@@ -1,14 +1,8 @@
-const fs = require('fs');
 const express = require('express');
-const https = require('https');
-const { Http, Service } = require('@zero65/utils');
+const app     = express();
 
-const app = express();
-
-const httpsAgent = new https.Agent({
-  keepAlive: true, 
-  maxSockets: Infinity
-});
+const Config      = require('../src/config');
+const { Service } = require('@zero65/utils');
 
 
 
@@ -27,77 +21,41 @@ app.use('/static', express.static(`${ __dirname }/../static`));
 
 app.all('*', async (req, res) => {
 
-  let service = req.hostname.substring(0, req.hostname.indexOf('.'));  
-  let path = req.path;
+  if(!Config[req.hostname])
+    return res.status(404).send('App not found !');
 
- 
-  if(!path.startsWith('/api/')) {
 
-    if(req.method != 'GET')
-      return res.status(405).send('Method not allowed !');
-
-    if(service != 'invest' && service != 'paisa')
-      return res.status(404).send('Page not found !');
-
-    let host = `${ service }-app-ci6dfndpjq-as.a.run.app`;
-    if(!path.startsWith('/images/') && !path.startsWith('/css/') && !path.startsWith('/js/'))
-      path = '/';
-
-    let headers = {};
-    headers['Authorization'] = 'Bearer ' + (await Http.doGet(
-      'metadata.google.internal:80',
-      '/computeMetadata/v1/instance/service-accounts/default/identity',
-      { 'Metadata-Flavor': 'Google' },
-      { 'audience': 'https://' + host }
-    )).data;
-
-    https.request({
-      hostname: host,
-      port: 443,
-      path: path,
-      method: 'GET',
-      headers: headers,
-      agent: httpsAgent,
-      timeout: 1000
-    }, response => response.pipe(res.status(response.statusCode).set(response.headers)) ).end();
-
-    return;
-
+  let service, path;
+  for(const arr of Config[req.hostname]) {
+    if(req.path.startsWith(arr[0])) {
+      service = arr[1];
+      path = arr[2](req.path);
+      break;
+    }
   }
-
-
-  path = path.substring(4);
-
-  if(path.startsWith('/~/')) {
-    path = path.substring(3);
-    let idx = path.indexOf('/');
-    service = path.substring(0, idx);
-    path = path.substring(idx);
-  }
-
 
   if(path == '' || path == '/')
     path = '/';
   else if(path.endsWith('/'))
     path = path.substring(0, path.length - 1);
 
+ 
+  if(!service.endsWith('-app')) { // TODO: remove
 
-  if(!fs.existsSync(`${ __dirname }/services/${ service }.js`))
-    return res.status(404).send('Service not found !');
+    let config = require(`./services/${ service }.js`);
 
-  let config = require(`./services/${ service }.js`);
+    config = config[path];
+    if(!config)
+      return res.status(404).send('Api not found !');
 
-  config = config[path];
-  if(!config)
-    return res.status(404).send('Api not found !');
+    config = config[req.method]
+    if(!config)
+      return res.status(405).send('Method not allowed !');
 
-  config = config[req.method]
-  if(!config)
-    return res.status(405).send('Method not allowed !');
+    if(config.auth && ! await config.auth(req))
+      return res.sendStatus(403);
 
-
-  if(config.auth && ! await config.auth(req))
-    return res.sendStatus(403);
+  }
 
 
   let headers = {};
@@ -105,12 +63,18 @@ app.all('*', async (req, res) => {
   if(req.headers['if-none-match'])
     headers['if-none-match'] = req.headers['if-none-match'];
 
-  let ret = await Service.doGet(service, path, headers, req.query, false);
+  let ret;
+  if(req.method == 'GET')
+    ret = await Service.doGet(service, path, headers, req.query, false);
+  else if(req.method == 'POST')
+    ret = await Service.doPost(service, path, headers, req.body, false);
+
   // TODO: Set 'if-none-match' header
+  
   res.status(ret.status).send(ret.data);
 
 });
 
 
 
-app.listen(process.env.PORT, console.log(`index: Server is up and running.`));
+app.listen(process.env.PORT || 8080, console.log(`index: Server is up and listening at ${ process.env.PORT || 8080 } port.`));

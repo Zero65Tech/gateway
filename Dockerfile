@@ -6,5 +6,6 @@ COPY package.json .
 COPY node_modules node_modules
 COPY static static
 COPY routes routes
+COPY src src
 
 CMD [ "npm", "start" ]
