@@ -31,6 +31,8 @@ app.all('*', async (req, res) => {
     return res.status(404).send('App not found !');
 
 
+  // Service, host & path
+
   let service, host, path;
   for(const arr of Config[req.hostname]) {
     if(req.path.startsWith(arr[0])) {
@@ -47,6 +49,8 @@ app.all('*', async (req, res) => {
     path = path.substring(0, path.length - 1);
 
  
+  // Validation & Auth
+
   if(!service.endsWith('-app')) { // TODO: remove
 
     let config = require(`./services/${ service }.js`);
@@ -65,7 +69,7 @@ app.all('*', async (req, res) => {
   }
 
 
-  // Headers
+  // Forward request and pipe response
 
   let headers = {};
 
@@ -84,9 +88,6 @@ app.all('*', async (req, res) => {
   if(req.headers['if-none-match'])
     headers['if-none-match'] = req.headers['if-none-match'];
 
-
-  // Request
-
   let request = https.request({
     hostname: host,
     port: 443,
@@ -97,12 +98,12 @@ app.all('*', async (req, res) => {
     timeout: 1000
   }, response => response.pipe(res.status(response.statusCode).set(response.headers)) );
 
-  if(req.method == 'POST')
-    request.write(JSON.stringify(req.body));
-
   request.on('error', (e) => {
     res.status(500).send(e.message);
   });
+
+  if(req.method == 'POST')
+    request.write(JSON.stringify(req.body));
 
   request.end();
 
