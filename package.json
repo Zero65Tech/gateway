@@ -2,10 +2,10 @@
   "name": "gateway",
   "version": "1.2.0",
   "description": "Gateway Service",
-  "main": "routes/index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "ENV=prod node routes/index.js",
-    "test": "ENV=test nodemon routes/index.js"
+    "start": "ENV=prod node src/index.js",
+    "test": "ENV=test nodemon src/index.js"
   },
   "author": "Zero65 Technologies Pvt. Ltd.",
   "dependencies": {
