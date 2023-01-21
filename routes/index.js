@@ -31,11 +31,12 @@ app.all('*', async (req, res) => {
     return res.status(404).send('App not found !');
 
 
-  let service, path;
+  let service, host, path;
   for(const arr of Config[req.hostname]) {
     if(req.path.startsWith(arr[0])) {
       service = arr[1];
-      path = arr[2](req.path);
+      host    = arr[2];
+      path    = arr[3](req.path);
       break;
     }
   }
@@ -63,9 +64,6 @@ app.all('*', async (req, res) => {
 
   }
 
-
-  // TODO: fix
-  let host = service + '-ci6dfndpjq-as.a.run.app';
 
   // Headers
 
