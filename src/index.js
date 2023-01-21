@@ -1,5 +1,6 @@
-const express = require('express');
-const https   = require('https');
+const express     = require('express');
+const https       = require('https');
+const querystring = require('querystring');
 
 const Config   = require('../src/config');
 const { Http } = require('@zero65/utils');
@@ -88,10 +89,21 @@ app.all('*', async (req, res) => {
   if(req.headers['if-none-match'])
     headers['if-none-match'] = req.headers['if-none-match'];
 
+  if(req.method == 'GET' && Object.entries(req.query).length) {
+    let query = Object.entries(req.query).reduce((map, entry) => {
+      let [ key, value ] = entry;
+      if(value instanceof Array)
+        key = key + '[]';
+      map[key] = value;
+      return map;
+    }, {});
+    path = path + '?' + querystring.stringify(query).replace(/%5B%5D/g,'[]');
+  }
+
   let request = https.request({
     hostname: host,
     port: 443,
-    path: path + req.originalUrl.substring(req.path.length),
+    path: path,
     method: req.method,
     headers: headers,
     agent: httpsAgent,
