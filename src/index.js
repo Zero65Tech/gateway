@@ -91,7 +91,7 @@ app.all('*', async (req, res) => {
     { 'audience': 'https://' + host }
   )).data;
 
-  headers['User-Agent'] = process.env.ENV + '/' + (process.env.K_REVISION || process.env.USER);
+  headers['User-Agent'] = req.headers['user-agent'];
 
   if(req.method == 'POST')
     headers['content-type'] = 'application/json';
