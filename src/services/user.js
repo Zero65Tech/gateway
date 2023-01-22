@@ -13,6 +13,9 @@ function authPost(req, session) {
 }
 
 module.exports = {
-  '/session'      : { 'GET': { auth: authGet }, 'POST': {} },
+  '/session'      : {
+    'GET': { auth: authGet },
+    'POST': { auth: (req, session) => session == undefined }
+  },
   '/google-login' : { 'POST': { auth: authPost } }
 }
