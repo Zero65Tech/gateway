@@ -2,18 +2,22 @@ const { OAuth2Client } = require('google-auth-library');
 const { Service } = require('@zero65/utils');
 const oAuth2Client = new OAuth2Client();
 
-async function auth(req) {
+async function auth(req, session) {
 
   try {
-    if(req.headers.authorization) // Chrome Extension
+    if(req.headers.authorization) { // Chrome Extension
       req.query.account = (await oAuth2Client.getTokenInfo(req.headers.authorization.substring('Bearer '.length))).email;
-    else if(req.cookies.authorization) // Web Apps
+    } else if(req.cookies.authorization) { // Web Apps - deprecated
       req.query.account = (await oAuth2Client.verifyIdToken({
         idToken  : req.cookies.authorization.substring('Bearer '.length),
         audience : '220251834863-p6gimkv0cgepodik4c1s8cs471dv9ioq.apps.googleusercontent.com',
       })).payload.email
-    else
+    } else if(session && session.status == 'loggedin') { // Web Apps
+      let user = await Service.doGet('user', '/',  {}, { id: session.user.id });
+      req.query.account = user.email;
+    } else {
       req.query.account = 'demo@zero65.in';
+    }
   } catch(e) {
     console.log(e);
     return false;

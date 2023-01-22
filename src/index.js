@@ -74,7 +74,7 @@ app.all('*', async (req, res) => {
     if(!config)
       return res.status(405).send('Method not allowed !');
 
-    if(config.auth && ! await config.auth(req))
+    if(config.auth && ! await config.auth(req, session))
       return res.sendStatus(403);
 
   }
