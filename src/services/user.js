@@ -1,12 +1,12 @@
 function authGet(req, session) {
   if(!session)
     return false;
-  req.query.sessionId = session.id;
+  req.query.id = session.id;
   return true;
 }
 
 function authPost(req, session) {
-  if(!session || session != 'active')
+  if(!session || session.status != 'active')
     return false;
   req.body.sessionId = session.id;
   return true;
