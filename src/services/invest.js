@@ -8,6 +8,7 @@ async function auth(req, session) {
     if(req.headers.authorization) { // Chrome Extension
       req.query.account = (await oAuth2Client.getTokenInfo(req.headers.authorization.substring('Bearer '.length))).email;
     } else if(session && session.status == 'loggedin') { // Web Apps
+      req.query.userId = session.user.id;
       let user = await Service.doGet('user', '/',  {}, { id: session.user.id });
       req.query.account = user.email;
     } else {
@@ -19,11 +20,12 @@ async function auth(req, session) {
   }
 
   if(req.query.profile && req.query.profile != 'Demo') {
-    let profiles = (await Service.doGet('invest', '/users/profiles', {}, { account: req.query.account }));
+    let profiles = (await Service.doGet('invest', '/users/profiles', {}, { userId: session.user.id, account: req.query.account }));
     if(!profiles[req.query.profile])
       return false;
   }
 
+  // TODO: Deprecte access my email / account
   // TODO: Verify porfolioIds
 
   return true;
