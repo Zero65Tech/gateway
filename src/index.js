@@ -2,8 +2,8 @@ const express     = require('express');
 const https       = require('https');
 const querystring = require('querystring');
 
-const Config   = require('../src/config');
-const { Http } = require('@zero65/utils');
+const Config = require('../src/config');
+const { Http, Service } = require('@zero65/utils');
 
 const app        = express();
 const httpsAgent = new https.Agent({
@@ -30,6 +30,16 @@ app.all('*', async (req, res) => {
 
   if(!Config[req.hostname])
     return res.status(404).send('App not found !');
+
+
+  // Session
+
+  let session = undefined;
+  if(req.cookies.sessionId) {
+    session = await Service.doGet('user', '/session', {}, { id: req.cookies.sessionId });
+    if(session.status != 'active' && session.status != 'loggedin')
+      return res.sendStatus(401);
+  }
 
 
   // Service, host & path
