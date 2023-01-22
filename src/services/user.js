@@ -13,9 +13,19 @@ function authPost(req, session) {
 }
 
 module.exports = {
-  '/session'      : {
+  '/session': {
     'GET': { auth: authGet },
     'POST': { auth: (req, session) => session == undefined }
+  },
+  '/session/ping': {
+    'POST': {
+      auth: (req, session) => {
+        if(!session || session.status != 'loggedin')
+          return false;
+        req.body.id = session.id;
+        return true;
+      }
+    }
   },
   '/google-login' : { 'POST': { auth: authPost } }
 }
