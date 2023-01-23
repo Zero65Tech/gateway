@@ -19,15 +19,6 @@ async function auth(req, session) {
     return false;
   }
 
-  if(req.query.profile && req.query.profile != 'Demo') {
-    let profiles = (await Service.doGet('invest', '/users/profiles', {}, { userId: session.user.id, account: req.query.account }));
-    if(!profiles[req.query.profile])
-      return false;
-  }
-
-  // TODO: Deprecte access my email / account
-  // TODO: Verify porfolioIds
-
   return true;
 
 }
