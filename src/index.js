@@ -91,7 +91,7 @@ app.all('*', async (req, res) => {
     { 'audience': 'https://' + host }
   )).data;
 
-  headers['User-Agent'] = req.headers['user-agent'];
+  headers['user-agent'] = req.headers['user-agent'];
 
   if(req.method == 'POST')
     headers['content-type'] = 'application/json';

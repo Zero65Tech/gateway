@@ -43,6 +43,7 @@ module.exports = {
   '/portfolio/symbol'           : { 'GET': { auth: auth } },
 
   '/zerodha/ids'                : { 'GET': { auth: auth } },
+  '/zerodha/session'            : { 'GET': { auth: auth } },
   '/user/sets'                  : { 'GET': { auth: auth } },
   '/trades/scripts'             : { 'GET': { auth: auth } },
   '/trades/about'               : { 'GET': { auth: auth } },
