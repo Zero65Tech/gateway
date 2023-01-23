@@ -1,15 +1,12 @@
-async function loggedinOnly(req, session) {
-
-  if(!session && session.status != 'loggedin')
+function loggedinOnly(req, session) {
+  if(session && session.status == 'loggedin')
+    req.query.userId = session.user.id;
+  else
     return false;
-
-  req.query.userId = session.user.id;
-  
   return true;
-
 }
 
-async function loggedinOrDemo(req, session) {
+function loggedinOrDemo(req, session) {
   if(session && session.status == 'loggedin')
     req.query.userId = session.user.id;
   else
