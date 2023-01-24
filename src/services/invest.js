@@ -18,6 +18,8 @@ function loggedinOrDemo(req, session) {
 
 module.exports = {
 
+  // Old ones
+
   '/users/profiles'             : { 'GET': { auth: loggedinOrDemo } },
   '/users/groups'               : { 'GET': { auth: loggedinOrDemo } },
   '/trades'                     : { 'GET': { auth: loggedinOrDemo } },
@@ -35,26 +37,35 @@ module.exports = {
   '/portfolio/summary'          : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio/symbol'           : { 'GET': { auth: loggedinOrDemo } },
 
-
-  '/zerodha/ids'                : { 'GET': { auth: loggedinOnly } },
-  '/zerodha/session'            : { 'GET': { auth: loggedinOnly } },
-
-  '/user/sets'                  : { 'GET': { auth: loggedinOrDemo } },
-  '/trades/scripts'             : { 'GET': { auth: loggedinOrDemo } },
-  '/trades/about'               : { 'GET': { auth: loggedinOrDemo } },
-  '/trades/organized'           : { 'GET': { auth: loggedinOrDemo } },
-  '/sprints/summary'            : { 'GET': { auth: loggedinOrDemo } },
-  '/sprints/trades-v2'          : { 'GET': { auth: loggedinOrDemo } },
-  '/portfolio-v4'               : { 'GET': { auth: loggedinOrDemo } },
-  '/portfolio-v4/dates'         : { 'GET': { auth: loggedinOrDemo } },
-  '/portfolio-v4/amount'        : { 'GET': { auth: loggedinOrDemo } },
-  '/portfolio-v4/amount/set'    : { 'GET': { auth: loggedinOrDemo } },
-  '/portfolio-v4/pnl'           : { 'GET': { auth: loggedinOrDemo } },
-  '/portfolio-v4/pnl-tax'       : { 'GET': { auth: loggedinOrDemo } },
-  '/portfolio-v4/fo'            : { 'GET': { auth: loggedinOrDemo } },
-
-
   '/holding-gains/distribution' : { 'GET': { auth: loggedinOrDemo } },
   '/fo/positions'               : { 'GET': { auth: loggedinOrDemo } },
+
+
+  // Test ENV
+
+  '/zerodha/instruments'     : { 'GET': {} },
+
+
+  // Chrome Extension
+
+  '/zerodha/ids'             : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/session'         : { 'GET': { auth: loggedinOnly } },
+
+
+  // Web App
+
+  '/user/sets'               : { 'GET': { auth: loggedinOrDemo } },
+  '/trades/scripts'          : { 'GET': { auth: loggedinOrDemo } },
+  '/trades/about'            : { 'GET': { auth: loggedinOrDemo } },
+  '/trades/organized'        : { 'GET': { auth: loggedinOrDemo } },
+  '/sprints/summary'         : { 'GET': { auth: loggedinOrDemo } },
+  '/sprints/trades-v2'       : { 'GET': { auth: loggedinOrDemo } },
+  '/portfolio-v4'            : { 'GET': { auth: loggedinOrDemo } },
+  '/portfolio-v4/dates'      : { 'GET': { auth: loggedinOrDemo } },
+  '/portfolio-v4/amount'     : { 'GET': { auth: loggedinOrDemo } },
+  '/portfolio-v4/amount/set' : { 'GET': { auth: loggedinOrDemo } },
+  '/portfolio-v4/pnl'        : { 'GET': { auth: loggedinOrDemo } },
+  '/portfolio-v4/pnl-tax'    : { 'GET': { auth: loggedinOrDemo } },
+  '/portfolio-v4/fo'         : { 'GET': { auth: loggedinOrDemo } },
   
 };
