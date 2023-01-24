@@ -10,7 +10,7 @@ function loggedinOrDemo(req, session) {
   if(session && session.status == 'loggedin')
     req.query.userId = session.user.id;
   else
-    req.query.account = 'demo@zero65.in';
+    req.query.userId = '#demo';
   return true;
 }
 
@@ -44,6 +44,13 @@ module.exports = {
   // Test ENV
 
   '/zerodha/instruments'     : { 'GET': {} },
+
+  '/zerodha/transactions'    : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/trades'          : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/portfolio'       : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/tax-pnl'         : { 'GET': { auth: loggedinOnly } },
+
+  '/zerodha/enctoken'        : { 'GET': { auth: loggedinOnly } },
 
 
   // Chrome Extension
