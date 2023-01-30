@@ -43,6 +43,13 @@ module.exports = {
 
   // Test ENV
 
+  '/amc/transactions'        : { 'GET': { auth: loggedinOnly } },
+  '/amc/trades'              : { 'GET': { auth: loggedinOnly } },
+  '/amc/portfolio'           : { 'GET': { auth: loggedinOnly } },
+
+
+  // Test ENV
+
   '/zerodha/instruments'     : { 'GET': {} },
 
   '/zerodha/transactions'    : { 'GET': { auth: loggedinOnly } },
