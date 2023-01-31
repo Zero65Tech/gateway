@@ -1,15 +1,18 @@
-const express     = require('express');
-const https       = require('https');
-const querystring = require('querystring');
+const express        = require('express');
+const https          = require('https');
+const { GoogleAuth } = require('google-auth-library');
 
+const { Service } = require('@zero65/utils');
 const Config = require('../src/config');
-const { Http, Service } = require('@zero65/utils');
 
-const app        = express();
+const app = express();
+
 const httpsAgent = new https.Agent({
   keepAlive: true, 
   maxSockets: Infinity
 });
+
+const auth = new GoogleAuth();
 
 
 
@@ -82,52 +85,28 @@ app.all('*', async (req, res) => {
 
   // Forward request and pipe response
 
-  let headers = {};
+  let client = await auth.getIdTokenClient('https://' + host);
 
-  headers['Authorization'] = 'Bearer ' + (await Http.doGet(
-    'metadata.google.internal:80',
-    '/computeMetadata/v1/instance/service-accounts/default/identity',
-    { 'Metadata-Flavor': 'Google' },
-    { 'audience': 'https://' + host }
-  )).data;
-
-  headers['user-agent'] = req.headers['user-agent'];
-
-  if(req.method == 'POST')
-    headers['content-type'] = 'application/json';
-
+  let headers = { 'User-Agent': req.headers['user-agent'] };
   if(req.headers['if-none-match'])
-    headers['if-none-match'] = req.headers['if-none-match'];
+    headers['If-None-Match'] = req.headers['if-none-match'];
 
-  if(req.method == 'GET' && Object.entries(req.query).length) {
-    let query = Object.entries(req.query).reduce((map, entry) => {
-      let [ key, value ] = entry;
-      if(value instanceof Array)
-        key = key + '[]';
-      map[key] = value;
-      return map;
-    }, {});
-    path = path + '?' + querystring.stringify(query).replace(/%5B%5D/g,'[]');
-  }
-
-  let request = https.request({
-    hostname: host,
-    port: 443,
-    path: path,
+  let options = {
+    url: 'https://' + host + path,
     method: req.method,
     headers: headers,
     agent: httpsAgent,
-    timeout: 1000
-  }, response => response.pipe(res.status(response.statusCode).set(response.headers)) );
+    responseType: 'stream';
+    validateStatus: status => true;
+  }
 
-  request.on('error', (e) => {
-    res.status(500).send(e.message);
-  });
+  if(req.method == 'GET')
+    options.params = req.query;
+  else if(req.method == 'POST')
+    options.data = req.body;
 
-  if(req.method == 'POST')
-    request.write(JSON.stringify(req.body));
-
-  request.end();
+  let response = await client.request(options);
+  response.data.pipe(res.status(response.status).set(response.headers));  
 
 });
 
