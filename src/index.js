@@ -96,8 +96,8 @@ app.all('*', async (req, res) => {
     method: req.method,
     headers: headers,
     agent: httpsAgent,
-    responseType: 'stream';
-    validateStatus: status => true;
+    responseType: 'stream',
+    validateStatus: status => true,
   }
 
   if(req.method == 'GET')
