@@ -2,8 +2,8 @@ const express        = require('express');
 const https          = require('https');
 const { GoogleAuth } = require('google-auth-library');
 
-const { Service } = require('@zero65/utils');
 const Config = require('../src/config');
+const GCP = require('@zero65/gcp');
 
 const app = express();
 
@@ -29,6 +29,16 @@ app.use('/static', express.static(`${ __dirname }/../static`));
 
 
 
+(async () => {
+
+  await GCP.init(Config['@zero65'].gcp);
+
+  app.listen(process.env.PORT || 8080, console.log(`index: Server is up and listening at ${ process.env.PORT || 8080 } port.`));
+
+}) ();
+
+
+
 app.all('*', async (req, res) => {
 
   if(!Config[req.hostname])
@@ -39,7 +49,7 @@ app.all('*', async (req, res) => {
 
   let session = undefined;
   if(req.cookies.sessionId) {
-    session = await Service.doGet('user', '/session', {}, { id: req.cookies.sessionId });
+    session = await GCP.Service.user.getSession({ id: req.cookies.sessionId });
     if(session.status != 'active' && session.status != 'loggedin')
       return res.sendStatus(401);
   }
@@ -109,7 +119,3 @@ app.all('*', async (req, res) => {
   response.data.pipe(res.status(response.status).set(response.headers));  
 
 });
-
-
-
-app.listen(process.env.PORT || 8080, console.log(`index: Server is up and listening at ${ process.env.PORT || 8080 } port.`));
