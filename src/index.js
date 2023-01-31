@@ -2,8 +2,8 @@ const express        = require('express');
 const https          = require('https');
 const { GoogleAuth } = require('google-auth-library');
 
-const Config = require('../src/config');
 const GCP = require('@zero65/gcp');
+const Config = require('../src/config');
 
 const app = express();
 
@@ -26,16 +26,6 @@ app.use(express.json());
 app.use(require('cookie-parser')());
 
 app.use('/static', express.static(`${ __dirname }/../static`));
-
-
-
-(async () => {
-
-  await GCP.init(Config['@zero65'].gcp);
-
-  app.listen(process.env.PORT || 8080, console.log(`index: Server is up and listening at ${ process.env.PORT || 8080 } port.`));
-
-}) ();
 
 
 
@@ -119,3 +109,13 @@ app.all('*', async (req, res) => {
   response.data.pipe(res.status(response.status).set(response.headers));  
 
 });
+
+
+
+(async () => {
+
+  await GCP.init(Config['@zero65'].gcp);
+
+  app.listen(process.env.PORT || 8080, console.log(`index: Server is up and listening at ${ process.env.PORT || 8080 } port.`));
+
+}) ();
