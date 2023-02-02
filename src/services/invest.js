@@ -81,5 +81,6 @@ module.exports = {
   '/portfolio-v4/pnl'        : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio-v4/pnl-tax'    : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio-v4/fo'         : { 'GET': { auth: loggedinOrDemo } },
+  '/portfolio-v4/errors'     : { 'GET': { auth: loggedinOrDemo } },
   
 };
