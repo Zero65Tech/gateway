@@ -76,7 +76,7 @@ module.exports = {
   '/sprints/trades-v2'       : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio-v4'            : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio-v4/dates'      : { 'GET': { auth: loggedinOrDemo } },
-  '/portfolio-v4/amount'     : { 'GET': { auth: loggedinOrDemo } },
+  '/portfolio-v5/amount'     : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio-v4/amount/set' : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio-v4/pnl'        : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio-v4/pnl-tax'    : { 'GET': { auth: loggedinOrDemo } },
