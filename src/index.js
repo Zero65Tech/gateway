@@ -1,5 +1,6 @@
 const express        = require('express');
 const https          = require('https');
+const querystring    = require('querystring');
 const { GoogleAuth } = require('google-auth-library');
 
 const GCP = require('@zero65/gcp');
@@ -100,10 +101,22 @@ app.all('*', async (req, res) => {
     validateStatus: status => true,
   }
 
-  if(req.method == 'GET')
+  if(req.method == 'GET') {
     options.params = req.query;
-  else if(req.method == 'POST')
+    options.paramsSerializer = (params) => {
+      params = Object.entries(params).reduce((map, entry) => {
+        let [ key, value ] = entry;
+        if(value instanceof Array)
+          map[key + '[]'] = value;
+        else
+          map[key] = value;
+        return map;
+      }, {});
+      return querystring.stringify(params).replace(/%5B%5D/g,'[]');
+    }
+  } else if(req.method == 'POST') {
     options.data = req.body;
+  }
 
   let response = await client.request(options);
   response.data.pipe(res.status(response.status).set(response.headers));  
