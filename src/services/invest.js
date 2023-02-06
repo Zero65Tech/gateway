@@ -74,6 +74,7 @@ module.exports = {
   '/trades/organized'        : { 'GET': { auth: loggedinOrDemo } },
   '/sprints/summary'         : { 'GET': { auth: loggedinOrDemo } },
   '/sprints/trades-v2'       : { 'GET': { auth: loggedinOrDemo } },
+  '/summary/errors'          : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio-v4'            : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio-v4/dates'      : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio-v5/amount'     : { 'GET': { auth: loggedinOrDemo } },
