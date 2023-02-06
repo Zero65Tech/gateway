@@ -33,12 +33,10 @@ module.exports = {
   '/portfolio'                  : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio/yoy'              : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio/scripts'          : { 'GET': { auth: loggedinOrDemo } },
-  '/portfolio/performance'      : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio/summary'          : { 'GET': { auth: loggedinOrDemo } },
   '/portfolio/symbol'           : { 'GET': { auth: loggedinOrDemo } },
 
   '/holding-gains/distribution' : { 'GET': { auth: loggedinOrDemo } },
-  '/fo/positions'               : { 'GET': { auth: loggedinOrDemo } },
 
 
   // Test ENV
@@ -68,7 +66,7 @@ module.exports = {
 
   // Web App
 
-  '/user/sets'               : { 'GET': { auth: loggedinOrDemo } },
+  '/users/sets'              : { 'GET': { auth: loggedinOrDemo } },
   '/trades/scripts'          : { 'GET': { auth: loggedinOrDemo } },
   '/trades/about'            : { 'GET': { auth: loggedinOrDemo } },
   '/trades/organized'        : { 'GET': { auth: loggedinOrDemo } },
