@@ -82,5 +82,6 @@ module.exports = {
   '/portfolio-v4/fo'         : { 'GET': { auth: loggedinOrDemo } },
   '/sets'                    : { 'GET': { auth: loggedinOrDemo } },
   '/sets/amount'             : { 'GET': { auth: loggedinOrDemo } },
+  '/pledge'                  : { 'GET': { auth: loggedinOrDemo } },
   
 };
