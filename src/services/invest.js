@@ -48,14 +48,15 @@ module.exports = {
 
   // Test ENV
 
-  '/zerodha/instruments'     : { 'GET': {} },
+  '/zerodha/instruments'       : { 'GET': {} },
 
-  '/zerodha/transactions'    : { 'GET': { auth: loggedinOnly } },
-  '/zerodha/trades'          : { 'GET': { auth: loggedinOnly } },
-  '/zerodha/portfolio'       : { 'GET': { auth: loggedinOnly } },
-  '/zerodha/tax-pnl'         : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/transactions'      : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/trades'            : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/portfolio'         : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/portfolio/pledged' : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/tax-pnl'           : { 'GET': { auth: loggedinOnly } },
 
-  '/zerodha/enctoken'        : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/enctoken'          : { 'GET': { auth: loggedinOnly } },
 
 
   // Chrome Extension
