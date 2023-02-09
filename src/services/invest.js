@@ -52,6 +52,7 @@ module.exports = {
 
   '/zerodha/transactions'      : { 'GET': { auth: loggedinOnly } },
   '/zerodha/trades'            : { 'GET': { auth: loggedinOnly } },
+  '/zerodha/trades-v2'         : { 'GET': { auth: loggedinOnly } },
   '/zerodha/portfolio'         : { 'GET': { auth: loggedinOnly } },
   '/zerodha/portfolio/pledged' : { 'GET': { auth: loggedinOnly } },
   '/zerodha/tax-pnl'           : { 'GET': { auth: loggedinOnly } },
