@@ -84,5 +84,6 @@ module.exports = {
   '/sets'                    : { 'GET': { auth: loggedinOrDemo } },
   '/sets/amount'             : { 'GET': { auth: loggedinOrDemo } },
   '/pledge'                  : { 'GET': { auth: loggedinOrDemo } },
+  '/day'                     : { 'GET': { auth: loggedinOrDemo } },
   
 };
