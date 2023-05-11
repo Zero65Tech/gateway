@@ -4,7 +4,7 @@ const querystring    = require('querystring');
 const { GoogleAuth } = require('google-auth-library');
 
 const GCP = require('@zero65/gcp');
-const Config = require('../src/config');
+const Config = require('./config.js');
 
 const app = express();
 

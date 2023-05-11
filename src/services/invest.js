@@ -68,6 +68,7 @@ module.exports = {
 
   // Web App
 
+  '/profiles'                : { 'GET': { auth: loggedinOrDemo } },
   '/trades/scripts'          : { 'GET': { auth: loggedinOrDemo } },
   '/trades/about'            : { 'GET': { auth: loggedinOrDemo } },
   '/trades/organized'        : { 'GET': { auth: loggedinOrDemo } },
