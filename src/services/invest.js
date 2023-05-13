@@ -48,7 +48,8 @@ module.exports = {
 
   // Test ENV
 
-  '/zerodha/instruments/tokens' : { 'GET': {} },
+  '/zerodha/instruments/tokens'     : { 'GET': {} },
+  '/zerodha/instruments/gold-bonds' : { 'GET': {} },
 
   '/zerodha/transactions'      : { 'GET': { auth: loggedinOnly } },
   '/zerodha/trades'            : { 'GET': { auth: loggedinOnly } },
