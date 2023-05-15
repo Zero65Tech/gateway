@@ -89,5 +89,7 @@ module.exports = {
   '/sets/amount'             : { 'GET': { auth: loggedinOrDemo } },
   '/pledge'                  : { 'GET': { auth: loggedinOrDemo } },
   '/day'                     : { 'GET': { auth: loggedinOrDemo } },
+
+  '/watch/gold-bonds'        : { 'GET': { auth: loggedinOrDemo } }
   
 };
