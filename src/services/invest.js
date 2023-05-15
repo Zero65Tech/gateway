@@ -50,6 +50,7 @@ module.exports = {
 
   '/zerodha/instruments/tokens'     : { 'GET': {} },
   '/zerodha/instruments/gold-bonds' : { 'GET': {} },
+  '/zerodha/instruments/futures'    : { 'GET': {} },
 
   '/zerodha/transactions'      : { 'GET': { auth: loggedinOnly } },
   '/zerodha/trades'            : { 'GET': { auth: loggedinOnly } },
@@ -90,6 +91,7 @@ module.exports = {
   '/pledge'                  : { 'GET': { auth: loggedinOrDemo } },
   '/day'                     : { 'GET': { auth: loggedinOrDemo } },
 
-  '/watch/gold-bonds'        : { 'GET': { auth: loggedinOrDemo } }
-  
+  '/watch/gold-bonds'        : { 'GET': { auth: loggedinOrDemo } },
+  '/watch/futures'           : { 'GET': { auth: loggedinOrDemo } },
+
 };
