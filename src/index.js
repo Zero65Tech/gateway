@@ -3,8 +3,8 @@ const https          = require('https');
 const querystring    = require('querystring');
 const { GoogleAuth } = require('google-auth-library');
 
-const GCP = require('@zero65/gcp');
 const Config = require('./config.js');
+const GCP    = require('@zero65/gcp');
 
 const app = express();
 
@@ -26,6 +26,7 @@ app.use(express.json());
 // Easy access cookies
 app.use(require('cookie-parser')());
 
+// TODO: Deprecate
 app.use('/static', express.static(`${ __dirname }/../static`));
 
 
@@ -66,7 +67,7 @@ app.all('*', async (req, res) => {
  
   // Validation & Auth
 
-  if(service) { // TODO: remove
+  if(service) {
 
     config = service[path];
     if(!config)
