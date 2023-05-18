@@ -66,11 +66,9 @@ app.all('*', async (req, res) => {
  
   // Validation & Auth
 
-  if(!service.endsWith('-app')) { // TODO: remove
+  if(service) { // TODO: remove
 
-    let config = require(`./services/${ service }.js`);
-
-    config = config[path];
+    config = service[path];
     if(!config)
       return res.status(404).send('Api not found !');
 
