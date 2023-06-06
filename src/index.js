@@ -37,6 +37,10 @@ app.all('*', async (req, res) => {
     return res.status(404).send('App not found !');
 
 
+  if(typeof Config[req.hostname] == 'string')
+    return res.redirect('https://' + Config[req.hostname]);
+
+
   // Session
 
   let session = undefined;
