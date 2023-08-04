@@ -41,16 +41,6 @@ app.all('*', async (req, res) => {
     return res.redirect('https://' + Config[req.hostname]);
 
 
-  // Session
-
-  let session = undefined;
-  if(req.cookies.sessionId) {
-    session = await GCP.Service.user.getSession({ id: req.cookies.sessionId });
-    if(session.status != 'active' && session.status != 'loggedin')
-      return res.sendStatus(401);
-  }
-
-
   // Service, host & path
 
   let service, host, path;
@@ -72,6 +62,13 @@ app.all('*', async (req, res) => {
   // Validation & Auth
 
   if(service) {
+
+    let session = undefined;
+    if(req.cookies.sessionId) {
+      session = await GCP.Service.user.getSession({ id: req.cookies.sessionId });
+      if(session.status != 'active' && session.status != 'loggedin')
+        return res.sendStatus(401);
+    }
 
     config = service[path];
     if(!config)
