@@ -13,7 +13,7 @@
     "@zero65tech/service": "4.0.x",
     "cookie-parser": "1.4.x",
     "cors": "2.8.x",
-    "express": "4.18.x"
+    "express": "4.19.x"
   },
   "nodemonConfig": {
     "verbose": false,
