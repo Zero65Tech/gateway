@@ -4,7 +4,7 @@ const querystring    = require('querystring');
 const { GoogleAuth } = require('google-auth-library');
 
 const Config = require('./config.js');
-const GCP    = require('@zero65/gcp');
+const Service = require('@zero65tech/service');
 
 const app = express();
 
@@ -45,7 +45,7 @@ app.all('*', async (req, res) => {
 
   let session = undefined;
   if(req.cookies.sessionId) {
-    session = await GCP.Service.user.getSession({ id: req.cookies.sessionId });
+    session = await Service.user.getSession({ id: req.cookies.sessionId });
     if(session.status != 'active' && session.status != 'loggedin')
       return res.sendStatus(401);
   }
@@ -132,7 +132,7 @@ app.all('*', async (req, res) => {
 
 (async () => {
 
-  await GCP.init(Config['@zero65'].gcp);
+  await Service.init(require('@zero65/config/service'));
 
   app.listen(process.env.PORT || 8080, console.log(`index: Server is up and listening at ${ process.env.PORT || 8080 } port.`));
 
