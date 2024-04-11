@@ -121,6 +121,8 @@ app.all('*', async (req, res) => {
     }
   } else if(req.method == 'POST') {
     options.data = req.body;
+  } else if(req.method == 'PATCH') {
+    options.data = req.body;
   }
 
   let response = await client.request(options);
