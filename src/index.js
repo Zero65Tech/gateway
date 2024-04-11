@@ -3,7 +3,7 @@ const https          = require('https');
 const querystring    = require('querystring');
 const { GoogleAuth } = require('google-auth-library');
 
-const Config = require('@zero65/config');
+const Config = require('@zero65/config/gateway');
 const Service = require('@zero65tech/service');
 
 const app = express();
